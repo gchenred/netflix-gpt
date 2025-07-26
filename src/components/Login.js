@@ -4,12 +4,18 @@ import validateEmailPassword from "../../utilities/validate";
 import {
   signInWithEmailAndPassword,
   createUserWithEmailAndPassword,
+  updateProfile,
 } from "firebase/auth";
 import { auth } from "../../utilities/firebase";
+import { addUser } from "../../utilities/userSlice";
+import { useDispatch } from "react-redux";
 
 const Login = () => {
   const [isSignIn, setIsSignIn] = useState(true);
   const [errorMessage, setErrorMessage] = useState(null);
+  const dispatch = useDispatch();
+
+  const name = useRef();
   const email = useRef();
   const password = useRef();
 
@@ -34,7 +40,6 @@ const Login = () => {
         .then((userCredential) => {
           // Signed in
           const user = userCredential.user;
-          console.log(user);
           // ...
         })
         .catch((error) => {
@@ -51,7 +56,29 @@ const Login = () => {
         .then((userCredential) => {
           // Signed up
           const user = userCredential.user;
-          console.log("signup : ", user);
+          updateProfile(user, {
+            displayName: name.current.value,
+            photoURL:
+              "https://avatars.githubusercontent.com/u/52731614?v=4&size=64",
+          })
+            .then(() => {
+              // Profile updated!
+              console.log("current user : ", auth.currentUser);
+              const { uid, email, displayName, photoURL } = auth.currentUser;
+              dispatch(
+                addUser({
+                  uid: uid,
+                  email: email,
+                  displayName: displayName,
+                  photoURL: photoURL,
+                })
+              );
+              // ...
+            })
+            .catch((error) => {
+              // An error occurred
+              // ...
+            });
           // ...
         })
         .catch((error) => {
@@ -82,6 +109,7 @@ const Login = () => {
             type="text"
             placeholder="First Name"
             className="p-4 my-4 bg-gray-700 w-full"
+            ref={name}
           ></input>
         )}
         <input
