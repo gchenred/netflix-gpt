@@ -4,6 +4,7 @@ import { useDispatch, useSelector } from "react-redux";
 import { useNavigate } from "react-router";
 import { auth } from "../../utilities/firebase";
 import { addUser, removeUser } from "../../utilities/userSlice";
+import { LOGO } from "../../utilities/constants";
 
 const Header = () => {
   const dispatch = useDispatch();
@@ -47,17 +48,13 @@ const Header = () => {
 
   return (
     <div className="w-full px-8 py-2 absolute bg-gradient-to-tl from to-black z-10 flex justify-between align-middle">
-      <img
-        src="https://help.nflxext.com/helpcenter/OneTrust/oneTrust_production_2025-07-14/consent/87b6a5c0-0104-4e96-a291-092c11350111/01938dc4-59b3-7bbc-b635-c4131030e85f/logos/dd6b162f-1a32-456a-9cfe-897231c7763c/4345ea78-053c-46d2-b11e-09adaef973dc/Netflix_Logo_PMS.png"
-        alt="Logo"
-        className="w-44"
-      ></img>
+      <img src={LOGO} alt="Logo" className="w-44"></img>
       {user && (
         <div className="flex justify-center items-center">
           <img
             alt="user-icon"
             src={user?.photoURL}
-            className="rounded-full"
+            className="rounded-full w-12"
           ></img>
           <button
             className="bg-red-700 text-lg text-white px-4 m-2 rounded-lg cursor-pointer w-28 h-12"

@@ -1,10 +1,8 @@
 import Login from "./components/Login";
 import Browse from "./components/Browse";
-import { createBrowserRouter, RouterProvider, useNavigate } from "react-router";
+import { createBrowserRouter, RouterProvider } from "react-router";
 import appStore from "../utilities/appStore";
-import { Provider, useDispatch } from "react-redux";
-import { useEffect } from "react";
-import { addUser, removeUser } from "../utilities/userSlice";
+import { Provider } from "react-redux";
 
 const App = () => {
   const appRouter = createBrowserRouter([
